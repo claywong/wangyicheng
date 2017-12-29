@@ -1,0 +1,60 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="page__title">{{brief.name}}</view>
+        <view class="page__desc">当前版本：{{brief.desc}}</view>
+        <view class="page__desc">历史编译：{{brief.compileCount}}</view>
+        <view class="page__desc">最新包外网二维码下载地址</view>
+        <view >
+            <button type="default" class="weui-btn mini-btn" size="mini">聊天室</button>    
+            <button type="default" class="weui-btn mini-btn" size="mini">接受通知</button> 
+            <button type="default" class="weui-btn mini-btn" size="mini">收藏项目</button> 
+            <button type="default" class="weui-btn mini-btn" size="mini">构建</button> 
+        </view>
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on':''}}" bindtap="tabClick">
+                        <view class="weui-navbar__title">
+                            {{item}}
+                        </view>
+                    </view>
+                </block>
+                <view class="weui-tab__slider" style="left: {{sliderLeft}}px; transform:transtranslateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);">
+                </view>
+            </view>
+            <modal hidden="{{qr_hidden}}" title="二维码下载" confirm-text="保存到相册" cancel-text="自定义取消" bindconfirm="confirm" no-cancel="True">
+                <image style="width: 320px; height: 320px; background-color: #eeeeee;" src="{{qr_url}}" />
+            </modal>
+            <view class="weui-tab__panel">
+                <view class="weui-panel weui-panel_access">
+                    <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
+                        <view class="weui-panel__bd">
+                        <scroll-view class='list' scroll-y="{{true}}" style='height:{{800}}rpx;' bindscrolltolower='nextPage' bindscrolltoupper="getList">
+                            <block wx:for="{{list}}" wx:key="id">
+                                <view id="{{item.id}}" class="weui-media-box weui-media-box_text">
+                                    <view class="weui-media-box__title weui-media-box__title_in-text">时间:{{item.commitTime}}</view>
+                                    <view class="weui-media-box__desc">{{item.log}}</view>
+                                    <view><button  type="default" class="weui-btn mini-btn" size="mini" bindtap="defaultTap" >安装</button></view>
+                                </view>
+                            </block>
+                        </scroll-view>
+                        </view>
+                    </view>
+                    <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                        <view class="weui-panel__bd">
+                        <scroll-view class='list' scroll-y="{{true}}" style='height:{{800}}rpx;' bindscrolltolower='nextPage' bindscrolltoupper="getList">
+                            <block wx:for="{{list}}" wx:key="id">
+                                <view dataset_xxx="{{item.id}}" class="weui-media-box weui-media-box_text">
+                                    <view class="weui-media-box__title weui-media-box__title_in-text">时间:{{item.commitTime}}</view>
+                                    <view class="weui-media-box__desc">{{item.log}}</view>
+                                    <view><button  type="default" class="weui-btn mini-btn" size="mini" bindtap="defaultTap" >安装</button></view>
+                                </view>
+                            </block>
+                        </scroll-view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
